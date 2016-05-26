@@ -1,37 +1,38 @@
+/*jshint esversion: 6 */
 (function(){
-  class List extends React.Component {
-    constructor() {
-      super();
-      this.state = { todos: [] }
-    }
+    class List extends React.Component {
+        constructor() {
+            super();
+            this.state = { todos: [] };
+        }
 
-          componentDidMount() {
+        componentDidMount() {
             this.serverRequest = $.get(this.props.source, function (result) {
-              this.setState({
+            this.setState({
                 todos: result
-              });
+            });
             }.bind(this));
-          }
+        }
 
-          componentWillUnmount() {
+        componentWillUnmount() {
             this.serverRequest.abort();
-          }
+        }
 
-    render() {
-      var rows = [];
-      console.log(this.state);
-      this.state.todos.forEach(function(todo){
-          rows.push(<li key={todo.id}>{todo.description}</li>)
-      })
-      return (
-        <ul>
-          {rows}
-        </ul>
-      )
+        render() {
+            var rows = [];
+            this.state.todos.forEach(function(todo,id){
+                console.log(todo);
+                rows.push(<li key={id}>{todo.description}</li>);
+            });
+            return (
+                <ul>
+                    {rows}
+                </ul>
+            );
+        }
     }
-  }
     ReactDOM.render(
-      <List source="api/todos/" />,
-      document.getElementById('app')
+        <List source="api/todos/" />,
+        document.getElementById('app')
     );
 })();
