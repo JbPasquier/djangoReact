@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 (function(){
     class List extends React.Component {
         constructor() {
@@ -46,7 +45,7 @@
                 </table>
             );
         }
-    }
+    };
     class Menu extends React.Component {
         render() {
             return (
@@ -74,16 +73,16 @@
                 </div>
             )
         }
-    }
+    };
     class TodosList extends React.Component {
         render() {
             return (
                 <div>
-                    <List source="api/todos/" />
+                    <List source="/api/todos/" />
                 </div>
             )
         }
-    }
+    };
     class TodosAbout extends React.Component {
         render() {
             return (
@@ -92,7 +91,7 @@
                 </div>
             )
         }
-    }
+    };
     class TodosLogin extends React.Component {
         render() {
             return (
@@ -101,7 +100,7 @@
                 </div>
             )
         }
-    }
+    };
     ReactDOM.render((
         <div>
             <Menu />
