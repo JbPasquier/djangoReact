@@ -17,13 +17,23 @@
             this.serverRequest.abort();
         }
 
+        handleChange(event) {
+            var e = event.target;
+            $.ajax({
+                url: e.getAttribute('data-url'),
+                type: 'PUT',
+                data: "description="+e.value,
+            });
+        }
+
         render() {
+            var cmp = this;
             var rows = [];
             this.state.todos.forEach(function(todo,id) {
                 rows.push(
                     <tr key={id}>
                         <td>
-                            <input type='text' className='form-control' defaultValue={todo.description} />
+                            <input data-url={todo.url} type='text' className='form-control' defaultValue={todo.description} onChange={cmp.handleChange.bind(cmp)} />
                         </td>
                         <td className='text-center'>
                             <span className='glyphicon glyphicon-remove'></span>
