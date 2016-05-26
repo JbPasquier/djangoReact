@@ -22,7 +22,9 @@
             var rows = [];
             this.state.todos.forEach(function(todo,id){
                 console.log(todo);
-                rows.push(<li key={id}>{todo.description}</li>);
+                rows.push(
+                    <li key={id}>{todo.description}</li>
+                );
             });
             return (
                 <ul>
