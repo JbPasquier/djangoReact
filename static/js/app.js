@@ -27,9 +27,6 @@
                             <input type='text' className='form-control' defaultValue={todo.description} />
                         </td>
                         <td className='text-center'>
-                            <span className='glyphicon glyphicon-edit'></span>
-                        </td>
-                        <td className='text-center'>
                             <span className='glyphicon glyphicon-remove'></span>
                         </td>
                     </tr>
@@ -40,7 +37,6 @@
                     <thead>
                         <tr>
                             <th>Todo</th>
-                            <th>Modifier</th>
                             <th>Supprimer</th>
                         </tr>
                     </thead>
@@ -62,13 +58,13 @@
                         <h2>Test router</h2>
                         <ul>
                             <li>
-                                <a href="/#/">GET</a>
+                                <a href="/#/">Todos</a>
                             </li>
                             <li>
-                                <a href="/#/add">POST</a>
+                                <a href="/#/about">About</a>
                             </li>
                             <li>
-                                <a href="/#/delete">DELETE</a>
+                                <a href="/#/login">Login</a>
                             </li>
                         </ul>
                     </div>
@@ -88,20 +84,20 @@
             )
         }
     }
-    class TodosAdd extends React.Component {
+    class TodosAbout extends React.Component {
         render() {
             return (
                 <div>
-                    <h1>Add a todo form here</h1>
+                    <h1>About us</h1>
                 </div>
             )
         }
     }
-    class TodosDelete extends React.Component {
+    class TodosLogin extends React.Component {
         render() {
             return (
                 <div>
-                    <h1>Here we delete a todo</h1>
+                    <h1>Here you can login</h1>
                 </div>
             )
         }
@@ -111,8 +107,8 @@
             <Menu />
             <ReactRouter.Router>
                 <ReactRouter.Route path="/" component={TodosList}/>
-                <ReactRouter.Route path="/add" component={TodosAdd}/>
-                <ReactRouter.Route path="/delete" component={TodosDelete}/>
+                <ReactRouter.Route path="/about" component={TodosAbout}/>
+                <ReactRouter.Route path="/login" component={TodosLogin}/>
             </ReactRouter.Router>
         </div>
     ), document.getElementById('app'));
