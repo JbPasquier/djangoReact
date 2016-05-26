@@ -24,7 +24,7 @@
                 rows.push(
                     <tr key={id}>
                         <td>
-                            <input type='text' className='form-control' value={todo.description} />
+                            <input type='text' className='form-control' defaultValue={todo.description} />
                         </td>
                         <td className='text-center'>
                             <span className='glyphicon glyphicon-edit'></span>
@@ -38,7 +38,11 @@
             return (
                 <table className='table table-hover table-bordered'>
                     <thead>
-                        <tr><th>Todo</th><th>Modifier</th><th>Supprimer</th></tr>
+                        <tr>
+                            <th>Todo</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {rows}
@@ -56,7 +60,17 @@
                     </div>
                     <div className='row'>
                         <h2>Test router</h2>
-                        <ul><li><a href="/#/">GET</a></li><li><a href="/#/add">POST</a></li><li><a href="/#/delete">DELETE</a></li></ul>
+                        <ul>
+                            <li>
+                                <a href="/#/">GET</a>
+                            </li>
+                            <li>
+                                <a href="/#/add">POST</a>
+                            </li>
+                            <li>
+                                <a href="/#/delete">DELETE</a>
+                            </li>
+                        </ul>
                     </div>
                     <div className='row'>
                         <h2>Page</h2>
@@ -92,9 +106,6 @@
             )
         }
     }
-    var Route = ReactRouter.Route;
-    var Routes = ReactRouter.Routes;
-    var Link = ReactRouter.Link;
     ReactDOM.render((
         <div>
             <Menu />
