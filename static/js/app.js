@@ -1,16 +1,45 @@
 (function(){
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
     class List extends React.Component {
         constructor() {
             super();
             this.state = { todos: [] };
         }
 
-        componentDidMount() {
+        getTodos() {
             this.serverRequest = $.get(this.props.source, function (result) {
             this.setState({
                 todos: result
             });
             }.bind(this));
+        }
+
+        componentDidMount() {
+            this.getTodos();
         }
 
         componentWillUnmount() {
@@ -26,6 +55,30 @@
             });
         }
 
+        handleDelete(event) {
+            var cmp = this;
+            var e = event.target;
+            $.ajax({
+                url: e.getAttribute('data-url'),
+                type: 'DELETE',
+                success: function() {
+                    cmp.getTodos();
+                }
+            });
+        }
+
+        handlePost(event) {
+            var cmp = this;
+            $.ajax({
+                url: '/api/todos/',
+                type: 'POST',
+                data: "description="+document.getElementById('createTodo').value,
+                success: function() {
+                    cmp.getTodos();
+                }
+            });
+        }
+
         render() {
             var cmp = this;
             var rows = [];
@@ -33,20 +86,32 @@
                 rows.push(
                     <tr key={id}>
                         <td>
-                            <input data-url={todo.url} type='text' className='form-control' defaultValue={todo.description} onChange={cmp.handleChange.bind(cmp)} />
+                            <input data-url={todo.url} type='text' className='form-control' defaultValue={todo.description} onKeyPress={cmp.handleChange} />
                         </td>
                         <td className='text-center'>
-                            <span className='glyphicon glyphicon-remove'></span>
+                            <span data-url={todo.url} className='glyphicon glyphicon-remove' onClick={cmp.handleDelete.bind(cmp)}></span>
                         </td>
                     </tr>
                 );
             });
+            rows.push(
+                <tr key={this.state.todos.length}>
+                    <td colSpan='2'>
+                        <div className='form-control input-group'>
+                            <input type='text' className='form-control' id='createTodo' placeholder='Nouvelle todo...' />
+                            <span className="input-group-btn">
+                               <button className="btn btn-default" type="button" onClick={cmp.handlePost.bind(this)}>Ajouter</button>
+                             </span>
+                        </div>
+                    </td>
+                </tr>
+            );
             return (
                 <table className='table table-hover table-bordered'>
                     <thead>
                         <tr>
                             <th>Todo</th>
-                            <th>Supprimer</th>
+                            <th style={{width:20}}>Supprimer</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,0 +1,9 @@
+.glyphicon.glyphicon-remove {
+    color: blue;
+    cursor: pointer;
+    font-size: 18pt;
+    margin-top: 2px;
+}
+.glyphicon.glyphicon-remove:hover {
+    color: navy;
+}
