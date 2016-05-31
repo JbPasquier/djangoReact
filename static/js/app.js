@@ -121,35 +121,41 @@
             );
         }
     };
+    var l = location.hash.replace(/\#/,'').split('?')[0];
     class Menu extends React.Component {
+        constructor() {
+            super();
+            console.log(ReactRouter);
+        }
         render() {
             return (
-                <div className='container-fluid'>
-                    <div className='row'>
-                        <h1>React &amp; Django - Todo List</h1>
+                <nav className="navbar navbar-default" role="navigation">
+                    <div className="container-fluid">
+                        <div className="navbar-header">
+                            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                                <span className="sr-only">Toggle navigation</span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                            </button>
+                            <a className="navbar-brand" href="#">React &amp; Django - Todos</a>
+                        </div>
+                        <div className="collapse navbar-collapse" classId="navbar">
+                            <ul className="nav navbar-nav">
+                                <li className={l == '/' ? 'active' : ''}><a href="#/">Todos</a></li>
+                                <li className={l == '/about' ? 'active' : ''}><a href="#/about">About us</a></li>
+                                <li className={l == '/login' ? 'active' : ''}><a href="#/login">Login</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className='row'>
-                        <h2>Test router</h2>
-                        <ul>
-                            <li>
-                                <a href="/#/">Todos</a>
-                            </li>
-                            <li>
-                                <a href="/#/about">About</a>
-                            </li>
-                            <li>
-                                <a href="/#/login">Login</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className='row'>
-                        <h2>Page</h2>
-                    </div>
-                </div>
+                </nav>
             )
         }
     };
     class TodosList extends React.Component {
+        constructor() {
+            super();
+        }
         render() {
             return (
                 <div>
@@ -159,6 +165,9 @@
         }
     };
     class TodosAbout extends React.Component {
+        constructor() {
+            super();
+        }
         render() {
             return (
                 <div>
@@ -168,6 +177,9 @@
         }
     };
     class TodosLogin extends React.Component {
+        constructor() {
+            super();
+        }
         render() {
             return (
                 <div>
