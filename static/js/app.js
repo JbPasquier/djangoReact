@@ -125,7 +125,6 @@
     class Menu extends React.Component {
         constructor() {
             super();
-            console.log(ReactRouter);
         }
         render() {
             return (
@@ -180,10 +179,22 @@
         constructor() {
             super();
         }
+        handleLogin(event) {
+            var cmp = this;
+            $.ajax({url:'/api-auth/logout/',type:'GET'}); //Be sure that user is logged out + delete old CSRF token
+            $.ajax({url:'/api-auth/login/',type:'POST'}); //Generate a CSRF token
+            $.ajax({                                      //Now we can login
+                url: '/api-auth/login/',
+                type: 'POST',
+                data: "username="+document.getElementById('username').value+'&password='+document.getElementById('password').value
+            });
+        }
         render() {
             return (
                 <div>
-                    <h1>Here you can login</h1>
+                    <input type='text' placeholder='Username' id='username' />
+                    <input type='password' placeholder='Password' id='password' />
+                    <button onClick={this.handleLogin.bind(this)}>Login</button>
                 </div>
             )
         }
