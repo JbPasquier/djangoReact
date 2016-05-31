@@ -32,10 +32,10 @@
 
         getTodos() {
             this.serverRequest = $.get(this.props.source, function (result) {
-            this.setState({
-                todos: result
-            });
-            }.bind(this));
+                this.setState({
+                    todos: result
+                });
+            }.bind(this)).error(function(e){if(e.status == 403) window.location = '/api-auth/login/';});
         }
 
         componentDidMount() {
@@ -142,8 +142,7 @@
                         <div className="collapse navbar-collapse" classId="navbar">
                             <ul className="nav navbar-nav">
                                 <li className={l == '/' ? 'active' : ''}><a href="#/">Todos</a></li>
-                                <li className={l == '/about' ? 'active' : ''}><a href="#/about">About us</a></li>
-                                <li className={l == '/login' ? 'active' : ''}><a href="#/login">Login</a></li>
+                                <li className={l == '/login' ? 'active' : ''}><a href="/api-auth/logout">Logout</a></li>
                             </ul>
                         </div>
                     </div>
@@ -163,49 +162,11 @@
             )
         }
     };
-    class TodosAbout extends React.Component {
-        constructor() {
-            super();
-        }
-        render() {
-            return (
-                <div>
-                    <h1>About us</h1>
-                </div>
-            )
-        }
-    };
-    class TodosLogin extends React.Component {
-        constructor() {
-            super();
-        }
-        handleLogin(event) {
-            var cmp = this;
-            $.ajax({url:'/api-auth/logout/',type:'GET'}); //Be sure that user is logged out + delete old CSRF token
-            $.ajax({url:'/api-auth/login/',type:'POST'}); //Generate a CSRF token
-            $.ajax({                                      //Now we can login
-                url: '/api-auth/login/',
-                type: 'POST',
-                data: "username="+document.getElementById('username').value+'&password='+document.getElementById('password').value
-            });
-        }
-        render() {
-            return (
-                <div>
-                    <input type='text' placeholder='Username' id='username' />
-                    <input type='password' placeholder='Password' id='password' />
-                    <button onClick={this.handleLogin.bind(this)}>Login</button>
-                </div>
-            )
-        }
-    };
     ReactDOM.render((
         <div>
             <Menu />
             <ReactRouter.Router>
                 <ReactRouter.Route path="/" component={TodosList}/>
-                <ReactRouter.Route path="/about" component={TodosAbout}/>
-                <ReactRouter.Route path="/login" component={TodosLogin}/>
             </ReactRouter.Router>
         </div>
     ), document.getElementById('app'));
